@@ -187,10 +187,6 @@
                 <div class="substitute-label">1.ordezkoa</div>
                 <div class="substitute-number" id="substitute1">----</div>
             </div>
-            <div class="substitute-container">
-                <div class="substitute-label">2.ordezkoa</div>
-                <div class="substitute-number" id="substitute2">----</div>
-            </div>
         </div>
         
         <button id="drawButton">Atera 1.loteko zenbakia</button>
@@ -210,12 +206,44 @@
         let currentDraw = 1;
         const allDrawnNumbers = [];
         const loteDescriptions = [
-            "Janariz betetako 1.otzara",
-            "Janariz betetako 2.otzara",
-            "Atlhetic-eko sinatutako kamiseta",
-            "Peio Bilbaok sinatutako mallota",
-            "Lekeitioko koadroa",
-            "Esku-pilotako pilota",
+            "Sarrera bikoitza Mendexa Abentura Parkerako",
+            "Sarrera bikoitza Mendexa Abentura Parkerako",
+            "Sarrera bikoitza Mendexa Abentura Parkerako",
+            "Praka eta kamiseta (L) Marierrota",
+            "Bisera, buffa, kamiseta (L) eta toaila Amandarri",
+            "Sudadera (L) Isuntza",
+            "Kamiseta eta txandal osoa Futbol Taldea",
+            "Tximistako motxila",
+            "Tximistako motxila",
+            "Kamiseta eta igerilekuko txanoa Garraitz",
+            "Peio Bilbaok sinatutako mailota eta kulotea",
+            "Athleticeko kamiseta sinatuta",
+            "Lekeitioko koadroa Iñaki Zubillagak egina",
+            "Kitto elkarteko dendetan erosteko 30€-ko bonoa",
+            "Diademazko entzungailuak (Panasonic)",
+            "Bluetooth entzungailuak (Ikrea)",
+            "Kaptusa eta kaltzetinak",
+            "Nebera",
+            "Ikasmateriala A",
+            "Ikasmateriala B",
+            "Dardo-jokoa",
+            "Eskpelotako pilota",
+            "Botila termikoa",
+            "Mendimartxako motxila",
+            "Mendimartxako motxila",
+            "Umeen bizikleta (Hape)",
+            "Zorioneku kutxa",
+            "Zeramikazko olentzeko bonboiekin",
+            "LekeitioBHI sudadera",
+            "LekeitioBHI sudadera",
+            "LekeitioBHI sudadera",
+            "Janari sorta A",
+            "Janari sorta B",
+            "Janari sorta C",
+            "Gosari sorta A",
+            "Gosari sorta B",
+            "Natural World Oinetakoak",
+            
         ];
         
         
@@ -237,8 +265,7 @@
                     <div class="drawn-number-item">
                         <span class="lote-number">${index + 1}.lotekoa:</span> 
                         <span class="main-number-label">${formatNumber(lote.main)}</span> 
-                        (1.ordezkoa: ${formatNumber(lote.substitute1)}, 
-                        2.ordezkoa: ${formatNumber(lote.substitute2)})
+                        (1.ordezkoa: ${formatNumber(lote.substitute1)})
                         <div><em>${lote.description}</em></div>
                     </div>
                 `;
@@ -256,16 +283,13 @@
             // Add pop animation to numbers
             const mainNum = document.getElementById('mainNumber');
             const sub1 = document.getElementById('substitute1');
-            const sub2 = document.getElementById('substitute2');
             
             mainNum.classList.add('pop');
             sub1.classList.add('pop');
-            sub2.classList.add('pop');
             
             setTimeout(() => {
                 mainNum.classList.remove('pop');
                 sub1.classList.remove('pop');
-                sub2.classList.remove('pop');
             }, 300);
             
             // Trigger confetti
@@ -294,7 +318,7 @@
         
         document.getElementById('drawButton').addEventListener('click', function() {
             // Generate main number (0001-5000, not previously drawn)
-            let mainNumber, sub1, sub2;
+            let mainNumber, sub1;
             const usedNumbers = new Set();
             title = document.getElementById("title")
             title.innerHTML = `<h1>${currentDraw}.Loteko zenbakia</h1>`
@@ -303,7 +327,6 @@
             allDrawnNumbers.forEach(lote => {
                 usedNumbers.add(lote.main);
                 usedNumbers.add(lote.substitute1);
-                usedNumbers.add(lote.substitute2);
             });
             
             // Find available number for main
@@ -320,23 +343,18 @@
             
             usedNumbers.add(sub1);
             
-            // Find available number for substitute 2
-            do {
-                sub2 = Math.floor(Math.random() * 5000) + 1;
-            } while (usedNumbers.has(sub2));
+            
             
             // Add to drawn numbers
             allDrawnNumbers.push({
                 main: mainNumber,
                 substitute1: sub1,
-                substitute2: sub2,
                 description: loteDescriptions[currentDraw - 1] || "Deskribapenik gabe"
             });
             
             // Display formatted numbers with leading zeros
             document.getElementById('mainNumber').textContent = formatNumber(mainNumber);
             document.getElementById('substitute1').textContent = formatNumber(sub1);
-            document.getElementById('substitute2').textContent = formatNumber(sub2);
             document.getElementById('loteDescription').textContent = loteDescriptions[currentDraw - 1] || "Deskribapenik gabe";
             
             // Trigger celebration effects
